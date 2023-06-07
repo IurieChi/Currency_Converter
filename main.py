@@ -5,7 +5,28 @@
 import tkinter as tk
 from tkinter import Frame, messagebox, Label, ttk, Entry, Button
 from PIL import ImageTk, Image
+import requests
+import json
 
+
+# conet API to app and adjust it to frame
+def convert():
+   
+
+    url = "https://currency-converter18.p.rapidapi.com/api/v1/convert"
+
+    querystring = {"from":combo_from.get(),"to":combo_to.get(),"amount":value.get()}
+
+    headers = {
+        "X-RapidAPI-Key": "2ddaf60a89mshbec8b2b15428b43p198731jsnbad46544d551",
+        "X-RapidAPI-Host": "currency-converter18.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+    data= json.loads(response.text)
+    converted=round(data['result']['convertedAmount'],2) 
+# assigne value to lable
+    results['text']= converted
 
 # window colors
 col1 ="#FFFFFF" #white
@@ -34,9 +55,9 @@ currency = ['USD','EUR','SEK','DKK','GBP','CHF','JPY','CAD','ISK','AUD']
 
 #Main frame
 
-from_lable = Label(text='From', width=8, height= 1, padx=0, pady=0, relief= 'flat', anchor= 'nw', font= ('Iwy 15 bold'), bg= col1, fg= col2)
+from_lable = Label(text='From', width=8, height= 1, padx=0, pady=0, relief= 'flat', anchor= 'nw', font= ('Ivy 15 bold'), bg= col1, fg= col2)
 from_lable.place(x= 50, y= 80)
-to_lable = Label(text='To', width=8, height= 1, padx=0, pady=0, relief= 'flat', anchor= 'nw', font= ('Iwy 15 bold'), bg= col1, fg= col2)
+to_lable = Label(text='To', width=8, height= 1, padx=0, pady=0, relief= 'flat', anchor= 'nw', font= ('Ivy 15 bold'), bg= col1, fg= col2)
 to_lable.place(x= 200, y= 80)
 
 combo_from = ttk.Combobox(window, width=5, justify='center', font= ('Iwy 15 bold'))  
@@ -50,12 +71,14 @@ combo_to.place(x= 200, y=100)
 value = Entry(window, width=20, justify= 'center', font=('Iwy 15 bold'), relief='solid')
 value.place(x=50, y=150)
 
-button = Button(window, text='Convert', width=18, height=1, bg= col2, fg= col2, font=('Iwy 15 bold'), relief='solid')
+button = Button(window, text='Convert', width=18, height=1, bg= col1, fg= col2, font=('Ivy 15 bold'), relief='solid',command=convert)
 button.place(x=50, y=200)
 
 # result label
-result = Label(window, text='',width=20,height=2, anchor= 'w', font=('Ivy 15 bold'),bg= col1, relief='solid')
-result.place(x=50, y=270)
+results = Label(window, text='',width=20,height=2, pady=7, anchor= 'w', justify='center', font=('Ivy 15 bold'),bg= col1, relief='solid')
+results.place(x=50, y=270)
+
+
 
 
 if __name__ == "__main__":
