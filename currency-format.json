@@ -1197,7 +1197,7 @@
     "name": "Moldovan Leu",
     "fractionSize": 2,
     "symbol": {
-      "grapheme": "lei",
+      "grapheme": "Lei",
       "template": "1 $",
       "rtl": false
     },
@@ -1544,15 +1544,15 @@
     }
   },
   "RON": {
-    "name": "New Romanian Leu",
+    "name": "Romanian Leu",
     "fractionSize": 2,
     "symbol": {
-      "grapheme": "lei",
+      "grapheme": "Lei",
       "template": "$1",
       "rtl": false
     },
     "uniqSymbol": {
-      "grapheme": "lei",
+      "grapheme": "Lei",
       "template": "$1",
       "rtl": false
     }

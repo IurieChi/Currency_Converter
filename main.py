@@ -9,6 +9,19 @@ import requests
 import json
 
 
+# Find currency symbol
+def disply_symbol(file, key):
+    with open(file) as f:
+        content = json.load(f)
+        symbol = content[key]['symbol']['grapheme']
+        return symbol
+# extract name
+def disply_name(file, key):
+    with open(file) as f:
+        content = json.load(f)
+        name = content[key]['name']
+        return name
+    
 # conet API to app and adjust it to frame
 def convert():
     url = "https://currency-converter18.p.rapidapi.com/api/v1/convert"
@@ -21,8 +34,13 @@ def convert():
     }
 
     response = requests.get(url, headers=headers, params=querystring)
-    data= json.loads(response.text)
-    converted=round(data['result']['convertedAmount'],2) 
+    data = json.loads(response.text)
+    symbol = disply_symbol(file,combo_to.get())
+    money_name = disply_name(file,combo_to.get())
+
+    converted= f"{symbol} {round(data['result']['convertedAmount'],2)} {money_name}"
+    
+
 # assigne value to lable
     results['text']= converted
 
@@ -60,7 +78,7 @@ with open(file) as f:
     for key in content.keys():
         if key != " ":
             currency.append(key) 
-# currency = ['USD','EUR','SEK','DKK','GBP','CHF','JPY','CAD','ISK','AUD']
+
 
 #Main frame
 
@@ -84,7 +102,7 @@ button = tk.Button(window, text='Convert', width=18, height=1, bg=col4 , fg=col2
 button.place(x=50, y=200)
 
 # result label
-results = tk.Label(window, text='',width=20,height=2, pady=7, anchor= 'w', justify='center', font=('Ivy 15 bold'),bg= col1, relief='solid')
+results = tk.Label(window, text='',width=20,height=2, justify='center', font=('Ivy 15 bold'),bg= col1, relief='solid')
 results.place(x=50, y=270)
 
 
