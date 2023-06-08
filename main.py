@@ -3,7 +3,7 @@
 
 # create a window
 import tkinter as tk
-from tkinter import Frame, messagebox, Label, ttk, Entry, Button
+from tkinter import ttk
 from PIL import ImageTk, Image
 import requests
 import json
@@ -11,8 +11,6 @@ import json
 
 # conet API to app and adjust it to frame
 def convert():
-   
-
     url = "https://currency-converter18.p.rapidapi.com/api/v1/convert"
 
     querystring = {"from":combo_from.get(),"to":combo_to.get(),"amount":value.get()}
@@ -28,10 +26,13 @@ def convert():
 # assigne value to lable
     results['text']= converted
 
+
+
 # window colors
 col1 ="#FFFFFF" #white
 col2 ="#333333" #black
 col3 ="#80FF00" #green
+col4 = "#d31818" #red
 
 window = tk.Tk()
 window.geometry('350x400')
@@ -41,23 +42,31 @@ window.configure(bg=col1)
 window.resizable(width=False, height=False)
 
 #create top frame 
-top_frame = Frame(window, width=350, height = 65, bg= col3)
+top_frame = tk.Frame(window, width=350, height = 65, bg= col3)
 top_frame.grid(row=0, column=0)
 
 img = Image.open('curency.ico')
 img = img.resize((60,60)) 
 img = ImageTk.PhotoImage(img)
-app_name = Label (top_frame, image = img, compound='left', text="Curency Converter", padx= 40,  anchor= 'w' , font=('Arial 16 bold'), bg=col3, fg=col2)
+app_name = tk.Label (top_frame, image = img, compound='left', text="Curency Converter", padx= 40,  anchor= 'w' , font=('Arial 16 bold'), bg=col3, fg=col2)
 app_name.place(x=0,y=0)
 
-# Currensy list
-currency = ['USD','EUR','SEK','DKK','GBP','CHF','JPY','CAD','ISK','AUD']
+currency =[]
+# fill curency list from json 
+file = 'currency-format.json'
+with open(file) as f:
+    content = json.load(f)
+        # print(content)
+    for key in content.keys():
+        if key != " ":
+            currency.append(key) 
+# currency = ['USD','EUR','SEK','DKK','GBP','CHF','JPY','CAD','ISK','AUD']
 
 #Main frame
 
-from_lable = Label(text='From', width=8, height= 1, padx=0, pady=0, relief= 'flat', anchor= 'nw', font= ('Ivy 15 bold'), bg= col1, fg= col2)
+from_lable = tk.Label(text='From', width=8, height= 1, padx=0, pady=0, relief= 'flat', anchor= 'nw', font= ('Ivy 15 bold'), bg= col1, fg= col2)
 from_lable.place(x= 50, y= 80)
-to_lable = Label(text='To', width=8, height= 1, padx=0, pady=0, relief= 'flat', anchor= 'nw', font= ('Ivy 15 bold'), bg= col1, fg= col2)
+to_lable = tk.Label(text='To', width=8, height= 1, padx=0, pady=0, relief= 'flat', anchor= 'nw', font= ('Ivy 15 bold'), bg= col1, fg= col2)
 to_lable.place(x= 200, y= 80)
 
 combo_from = ttk.Combobox(window, width=5, justify='center', font= ('Iwy 15 bold'))  
@@ -68,14 +77,14 @@ combo_to = ttk.Combobox(window, width=5, justify='center', font=('Iwy 15 bold'))
 combo_to['values']= (currency)
 combo_to.place(x= 200, y=100)
 
-value = Entry(window, width=20, justify= 'center', font=('Iwy 15 bold'), relief='solid')
+value = tk.Entry(window, width=20, justify= 'center', font=('Iwy 15 bold'), relief='solid')
 value.place(x=50, y=150)
 
-button = Button(window, text='Convert', width=18, height=1, bg= col1, fg= col2, font=('Ivy 15 bold'), relief='solid',command=convert)
+button = tk.Button(window, text='Convert', width=18, height=1, bg=col4 , fg=col2, font=('Ivy 15 bold'), relief='solid',command=convert)
 button.place(x=50, y=200)
 
 # result label
-results = Label(window, text='',width=20,height=2, pady=7, anchor= 'w', justify='center', font=('Ivy 15 bold'),bg= col1, relief='solid')
+results = tk.Label(window, text='',width=20,height=2, pady=7, anchor= 'w', justify='center', font=('Ivy 15 bold'),bg= col1, relief='solid')
 results.place(x=50, y=270)
 
 
