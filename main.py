@@ -3,7 +3,7 @@
 
 # create a window
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk , messagebox
 from PIL import ImageTk, Image
 import requests
 import json
@@ -22,8 +22,23 @@ def disply_name(file, key):
         name = content[key]['name']
         return name
     
+def message():
+    #message 
+    
+    msg_empty_from = 'Please seletec curency FROM'
+    msg_empty_to = 'Please seletec curency To'
+    msg_empty_value = 'Please type amount to be converted'
+
+    if combo_from.get()== '':
+        return messagebox.showwarning('Warning',msg_empty_from)
+    elif combo_to.get() =='':
+        return messagebox.showwarning('Warning',msg_empty_to)
+    elif value.get() =='':
+        return messagebox.showwarning('Warning',msg_empty_value)
+    
 # conet API to app and adjust it to frame
-def convert():
+def conect_api():
+    
     url = "https://currency-converter18.p.rapidapi.com/api/v1/convert"
 
     querystring = {"from":combo_from.get(),"to":combo_to.get(),"amount":value.get()}
@@ -38,12 +53,18 @@ def convert():
     symbol = disply_symbol(file,combo_to.get())
     money_name = disply_name(file,combo_to.get())
 
+# format result for dysply
     converted= f"{symbol} {round(data['result']['convertedAmount'],2)} {money_name}"
     
 
 # assigne value to lable
     results['text']= converted
 
+def convert():
+    
+    # message is mandatory filds are empty 
+    message()
+    conect_api()
 
 
 # window colors
@@ -69,8 +90,9 @@ img = ImageTk.PhotoImage(img)
 app_name = tk.Label (top_frame, image = img, compound='left', text="Curency Converter", padx= 40,  anchor= 'w' , font=('Arial 16 bold'), bg=col3, fg=col2)
 app_name.place(x=0,y=0)
 
-currency =[]
-# fill curency list from json 
+
+# fill curency list from json for combo_from and combo_to 
+currency =[] 
 file = 'currency-format.json'
 with open(file) as f:
     content = json.load(f)
