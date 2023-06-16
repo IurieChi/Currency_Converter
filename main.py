@@ -84,7 +84,7 @@ window.resizable(width=False, height=False)
 top_frame = tk.Frame(window, width=350, height = 65, bg= col3)
 top_frame.grid(row=0, column=0)
 
-img = Image.open('curency.ico')
+img = Image.open('curency_.png')
 img = img.resize((60,60)) 
 img = ImageTk.PhotoImage(img)
 app_name = tk.Label (top_frame, image = img, compound='left', text="Curency Converter", padx= 40,  anchor= 'w' , font=('Arial 16 bold'), bg=col3, fg=col2)
