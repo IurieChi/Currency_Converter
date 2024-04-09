@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import ttk 
-from PIL import ImageTk, Image
+from PIL import ImageTk
+from PIL import Image
 import json
-from main import disply_name , disply_symbol, message, convert
+from main import convert
 
 # window colors
 col1 ="#FFFFFF" #white
@@ -13,12 +14,12 @@ col4 = "#d31818" #red
 window = tk.Tk()
 window.geometry('350x400')
 window.title('Curency Converter')
-window.iconbitmap('curency64.ico')
-window.configure(bg=col1)
+# window.iconbitmap('curency64.ico')
+window.configure(bg = col1)
 window.resizable(width=False, height=False)
 
 #create top frame 
-top_frame = tk.Frame(window, width=350, height = 65, bg= col3)
+top_frame = tk.Frame(window, width=350, height = 65, bg = col3)
 top_frame.grid(row=0, column=0)
 
 img = Image.open('curency_.png')
@@ -56,7 +57,7 @@ combo_to.place(x= 200, y=100)
 value = tk.Entry(window, width=20, justify= 'center', font=('Iwy 15 bold'), relief='solid')
 value.place(x=50, y=150)
 
-button = tk.Button(window, text='Convert', width=18, height=1, bg=col4 , fg=col2, font=('Ivy 15 bold'), relief='solid',command=convert)
+button = tk.Button(window, text='Convert', width=18, height=1, bg=col4 , fg=col2, font=('Ivy 15 bold'), relief='solid', command = convert)
 button.place(x=50, y=200)
 
 # result label
